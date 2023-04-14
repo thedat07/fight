@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SpamItem : MonoBehaviour
 {
     public float time;
     private float m_CountDownTime;
     public Transform snake;
-    public GameObject item;
+    public ItemGame item;
+    public ItemGame itemGold;
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -19,16 +21,21 @@ public class SpamItem : MonoBehaviour
     {
         if (m_CountDownTime < 0)
         {
-            SpamItemPos();
+            int random = Random.Range(1, 4);
+            for(int i = 0; i < random; i++)
+            {
+                SpamItemPos();
+            }
             m_CountDownTime = time;
         }
         m_CountDownTime -= Time.deltaTime;
     }
     private void SpamItemPos()
     {
-        Vector3 random = Random.insideUnitSphere * 5;
+        Vector3 random = Random.insideUnitSphere * 20;
         random.y = 0;
-        Vector3 pos = random + snake.position;
-        var itemSpam = Instantiate(item, pos, Quaternion.identity);
+        Vector3 pos = random;
+        int randomRate = Random.Range(0, 100);
+        var itemSpam = Lean.Pool.LeanPool.Spawn(randomRate>80? itemGold: item, pos, Quaternion.identity);
     }
 }

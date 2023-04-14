@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 public class SnakeController : MonoBehaviour
 {
+    public bool IsDead;
+    public Animator animator;
     public Vector3 DesiredDirection;
     public Vector3 LastNonZeroDirection;
     public VariableJoystick m_VariableJoystick;
@@ -12,16 +14,18 @@ public class SnakeController : MonoBehaviour
     public float BodySpeed = 5;
     public int Gap = 10;
 
-    // References
-    public GameObject BodyPrefab;
 
     // Lists
     public List<GameObject> BodyParts = new List<GameObject>();
     public List<Vector3> PositionsHistory = new List<Vector3>();
 
+    //UI
+    public UIEnd UIDead;
+    public UIGamePlay UIGamePlay;
     // Start is called before the first frame update
     void Start()
     {
+        UIGamePlay.UpdateStart(0, 10);
         // GrowSnake();
     }
 
@@ -29,6 +33,7 @@ public class SnakeController : MonoBehaviour
     void Update()
     {
 
+        if (IsDead ) return;
         // Move forward
         DesiredDirection = new Vector3(m_VariableJoystick.Horizontal, 0, m_VariableJoystick.Vertical);
         if (DesiredDirection.sqrMagnitude > 0)
@@ -62,13 +67,13 @@ public class SnakeController : MonoBehaviour
         }
     }
 
-    private void GrowSnake(Vector3 _point)
+    private void GrowSnake(Vector3 _point, GameObject _object)
     {
         // Instantiate body instance and
         // add it to the list
         transform.DORewind();
         transform.DOPunchScale(Vector3.one * 0.5f, 0.5f);
-        GameObject body = Instantiate(BodyPrefab, _point, Quaternion.identity);
+        GameObject body =_object;
         BodyParts.Add(body);
         int index = 0;
         foreach (var b in BodyParts)
@@ -83,16 +88,31 @@ public class SnakeController : MonoBehaviour
             body.transform.LookAt(point);
             index++;
             b.transform.DORewind();
-            b.transform.DOPunchScale(Vector3.one * 0.5f, 0.5f);
+            b.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Item"))
+
+
+    private void OnCollisionEnter(Collision other) {
+                if (other.gameObject.CompareTag("Item"))
         {
-            GrowSnake(other.transform.position);
-            Destroy(other.gameObject);
+            UIGamePlay.UpdateStart(BodyParts.Count+1, 10);
+            other.gameObject.GetComponent<ItemGame>().Pick();
+            GrowSnake(other.transform.position,other.gameObject);
+        }
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            UIDead.gameObject.SetActive(true);
+            UIDead.snakeController = this;
+            UIDead.Star(0);
+            IsDead = true;
+            animator.SetBool("IsDead", true);
+            foreach (var i in BodyParts)
+            {
+                Lean.Pool.LeanPool.Despawn(i);
+            }
         }
     }
+
 }

@@ -40,4 +40,9 @@ public class ItemGame : MonoBehaviour
         m_Collider.enabled = false;
         enabled = false;
     }
+    public void Clear()
+    {
+        m_Collider.enabled = true;
+        enabled = true;
+    }
 }

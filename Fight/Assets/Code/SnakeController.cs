@@ -106,12 +106,12 @@ public class SnakeController : MonoBehaviour
             UIDead.gameObject.SetActive(true);
             UIDead.snakeController = this;
             UIDead.Star(0);
-            IsDead = true;
-            animator.SetBool("IsDead", true);
             foreach (var i in BodyParts)
             {
-                Lean.Pool.LeanPool.Despawn(i);
+                i.GetComponent<ItemGame>().Clear();
             }
+            BodyParts.Clear();
+            gameObject.SetActive(false);
         }
     }
 

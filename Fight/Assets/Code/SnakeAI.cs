@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using Lean.Pool;
 
-public class SnakeAI : MonoBehaviour
+public class SnakeAI : MonoBehaviour, IPoolable
 {
     // Start is called before the first frame update
-    public bool IsDead;
     public Animator animator;
     public float BodySpeed = 5;
     public int Gap = 10;
@@ -20,6 +20,7 @@ public class SnakeAI : MonoBehaviour
 
     private NavMeshAgent m_Enemy;
     public Transform player;
+    public SpamEnemies SpamEnemies;
     Vector3 m_Target;
     void Start()
     {
@@ -30,8 +31,6 @@ public class SnakeAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsDead) return;
-        if (player.GetComponent<SnakeController>().IsDead) return;
         Collider[] hitColliders = new Collider[1];
         int numColliders = Physics.OverlapSphereNonAlloc(transform.position, 15, hitColliders,LayerMask.GetMask("Item"));
         if (numColliders > 0)
@@ -41,8 +40,12 @@ public class SnakeAI : MonoBehaviour
         }
         else
         {
-            m_Enemy.SetDestination(player.position);
+            if(Vector3.Distance(m_Target,transform.position)<5)
+            {
+                m_Target = transform.position + Static.RandomPointInAnnulus(5, 10);
+            }
         }
+        m_Enemy.SetDestination(m_Target);
         // Store position history
         PositionsHistory.Insert(0, transform.position);
 
@@ -98,17 +101,23 @@ public class SnakeAI : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Wall"))
         {
-            if(other.transform != player.transform)
-            {
-                Vector3 random = Random.insideUnitSphere * 20;
-                random.y = 0;
-                transform.position = random;
-                foreach (var i in BodyParts)
-                {
-                    Lean.Pool.LeanPool.Despawn(i);
-                }
-                BodyParts.Clear();
-            }
+            Lean.Pool.LeanPool.Despawn(gameObject);
         }
+    }
+
+   public  void OnSpawn()
+    {
+
+    }
+
+    /// <summary>Called when this poolable object is despawned.</summary>
+    public void OnDespawn()
+    {
+        SpamEnemies.SpamRevivalPoint();
+        foreach (var i in BodyParts)
+        {
+            i.GetComponent<ItemGame>().Clear();
+        }
+        BodyParts.Clear();
     }
 }

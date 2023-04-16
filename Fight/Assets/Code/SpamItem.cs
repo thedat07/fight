@@ -37,5 +37,7 @@ public class SpamItem : MonoBehaviour
         Vector3 pos = random;
         int randomRate = Random.Range(0, 100);
         var itemSpam = Lean.Pool.LeanPool.Spawn(randomRate>80? itemGold: item, pos, Quaternion.identity);
+
+        itemSpam.GetComponent<ItemGame>().enabled = true;
     }
 }

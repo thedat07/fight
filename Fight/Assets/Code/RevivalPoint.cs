@@ -6,6 +6,7 @@ using DG.Tweening;
 public class RevivalPoint : MonoBehaviour
 {
     SpamEnemies m_SpamEnemies;
+    private float m_Time;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +15,13 @@ public class RevivalPoint : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.DOScale(Vector3.one, 1f).From(Vector3.one * 0.5f).SetLoops(3,LoopType.Yoyo).OnComplete(() =>
-        {
-            m_SpamEnemies.SpamEnemy(transform.position);
+        m_Time = 3;
+    }
+    private void Update(){
+        if(m_Time<0){
+       m_SpamEnemies.SpamEnemy(transform.position);
             gameObject.SetActive(false);
-        });
+        }
+        m_Time-=Time.deltaTime;
     }
 }

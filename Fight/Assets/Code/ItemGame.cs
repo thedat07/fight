@@ -26,17 +26,8 @@ public class ItemGame : MonoBehaviour
         m_Collider.enabled = true;
         enabled = true;
     }
-    void Update()
-    {
-        if (m_CountDownTime < 0)
-        {
-            Lean.Pool.LeanPool.Despawn(gameObject);
-        }
-        m_CountDownTime -= Time.deltaTime;
-    }
     public void Pick(bool _check=true)
     {
-        m_UIGamePlay.UpdateGold(_check==true?gold:0);
         m_Collider.enabled = false;
         enabled = false;
     }

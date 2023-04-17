@@ -70,7 +70,7 @@ public class SnakeAI : MonoBehaviour, IPoolable
         // Instantiate body instance and
         // add it to the list
         transform.DORewind();
-        transform.DOPunchScale(Vector3.one * 0.5f, 0.5f);
+        transform.DOPunchScale(Vector3.one * 0.1f, 0.5f);
         GameObject body = _object;
         BodyParts.Add(body);
         int index = 0;
@@ -85,8 +85,6 @@ public class SnakeAI : MonoBehaviour, IPoolable
             // Rotate body towards the point along the snakes path
             body.transform.LookAt(point);
             index++;
-            b.transform.DORewind();
-            b.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f);
         }
     }
 
@@ -99,9 +97,9 @@ public class SnakeAI : MonoBehaviour, IPoolable
             other.gameObject.GetComponent<ItemGame>().Pick(false);
             GrowSnake(other.transform.position, other.gameObject);
         }
-        if (other.gameObject.CompareTag("Wall"))
+       else if (other.gameObject.CompareTag("Wall"))
         {
-            Lean.Pool.LeanPool.Despawn(gameObject);
+            Lean.Pool.LeanPool.Despawn(this.gameObject);
         }
     }
 
@@ -110,7 +108,6 @@ public class SnakeAI : MonoBehaviour, IPoolable
 
     }
 
-    /// <summary>Called when this poolable object is despawned.</summary>
     public void OnDespawn()
     {
         SpamEnemies.SpamRevivalPoint();

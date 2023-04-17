@@ -10,11 +10,12 @@ public class SpamEnemies : MonoBehaviour
     public int numberEnmies;
     public Transform player;
     public RevivalPoint RevivalPoint;
+        public float disMax;
     void Start()
     {
         for(int i = 0; i < numberEnmies; i++)
         {
-            SpamEnemy(Static.RandomPointInAnnulus(10, 15));
+            SpamEnemy(Static.RandomPointInAnnulus(disMax/2, disMax));
         }
     }
       
@@ -26,7 +27,7 @@ public class SpamEnemies : MonoBehaviour
     }
     public void SpamRevivalPoint()
     {
-        var enmey = Lean.Pool.LeanPool.Spawn(RevivalPoint, Static.RandomPointInAnnulus(10, 15), Quaternion.identity);
+        var enmey = Lean.Pool.LeanPool.Spawn(RevivalPoint, Static.RandomPointInAnnulus(disMax/2, disMax), Quaternion.identity);
     }
     // Update is called once per frame
 

@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: armLeft
   m_EditorClassIdentifier: 
   prefab:
+  - {fileID: 2902532314234440660, guid: aa7bea98170af497abf7ff1646293cda, type: 3}
   - {fileID: 5515484491010136201, guid: c4bd5623c332af646899b17ea0c0bcea, type: 3}
   - {fileID: 6824972927079499749, guid: 0701ed3d628a7284895d21da7a0584bb, type: 3}
   - {fileID: 8795071979306642108, guid: 539676e21b7deb84281e25c5ff35ca73, type: 3}
   - {fileID: 6520790273713703937, guid: bb0481ef3812beb46b5f1ec3bb35d1ca, type: 3}
+  - {fileID: 5692044697477767434, guid: 16371c5a5e8884d41977ba8052013641, type: 3}
+  - {fileID: 4991578121263481001, guid: 8154a160c31cb4d2fa5eb0651310b8a5, type: 3}
+  - {fileID: 216249342722644519, guid: 24a1cea6015404a289220c39aa751422, type: 3}
   - {fileID: 6981143883693144041, guid: bf1ef75233739ec48b77d3929a997659, type: 3}
   - {fileID: 1248380871163413435, guid: e91f99d8cd550c8409b7b2c880512ca9, type: 3}
   - {fileID: 63141349845238132, guid: dcba9c93c938c764492aa5aa6fdc8027, type: 3}

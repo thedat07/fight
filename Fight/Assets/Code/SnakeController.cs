@@ -25,7 +25,6 @@ public class SnakeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UIGamePlay.UpdateStart(0, 10);
         // GrowSnake();
     }
 
@@ -97,7 +96,6 @@ public class SnakeController : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
                 if (other.gameObject.CompareTag("Item"))
         {
-            UIGamePlay.UpdateStart(BodyParts.Count+1, 10);
             other.gameObject.GetComponent<ItemGame>().Pick();
             GrowSnake(other.transform.position,other.gameObject);
         }

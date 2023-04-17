@@ -10,6 +10,8 @@ public class SpamItem : MonoBehaviour
     public Transform snake;
     public ItemGame item;
     public ItemGame itemGold;
+    public int maxGold;
+    public int maxDir;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,7 @@ public class SpamItem : MonoBehaviour
     {
         if (m_CountDownTime < 0)
         {
-            int random = Random.Range(1, 4);
+            int random = Random.Range(1, maxGold);
             for(int i = 0; i < random; i++)
             {
                 SpamItemPos();
@@ -32,7 +34,7 @@ public class SpamItem : MonoBehaviour
     }
     private void SpamItemPos()
     {
-        Vector3 random = Random.insideUnitSphere * 20;
+        Vector3 random = Random.insideUnitSphere.normalized * Random.Range(0,maxDir);
         random.y = 0;
         Vector3 pos = random;
         int randomRate = Random.Range(0, 100);

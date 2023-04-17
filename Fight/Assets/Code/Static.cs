@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class Static 
 {
+    public const string bodyData = "BodyData";
+    public const string armLeftData = "ArmLeftData";
+    public const string armRightData = "ArmRightData";
+    public const string headData = "HeadData";
     public static Vector3 RandomPointInAnnulus(float minRadius, float maxRadius)
     {
 

@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638169966203051872
-    m_Hash: 3539771192
+      ticks: 638173367202836461
+    m_Hash: 3352288348
   m_LockFileStatus:
     m_FilePath: D:/Dev/Fight/fight/Fight/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638169966203614947
-    m_Hash: 2098292563
+      ticks: 638173367202836461
+    m_Hash: 700784436
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -424,6 +424,7 @@ m_PackageAssets:
         - 3.0.16
         - 3.0.17
         - 3.0.18
+        - 3.0.20
         compatible:
         - 1.0.2
         - 1.0.6
@@ -459,6 +460,7 @@ m_PackageAssets:
         - 3.0.16
         - 3.0.17
         - 3.0.18
+        - 3.0.20
         verified: 2.0.7
       dependencies:
       - name: com.unity.test-framework
@@ -535,6 +537,7 @@ m_PackageAssets:
         - 2.0.15
         - 2.0.16
         - 2.0.17
+        - 2.0.18
         compatible:
         - 1.0.2
         - 1.0.3
@@ -556,7 +559,8 @@ m_PackageAssets:
         - 2.0.15
         - 2.0.16
         - 2.0.17
-        verified: 2.0.17
+        - 2.0.18
+        verified: 2.0.18
       dependencies:
       - name: com.unity.test-framework
         version: 1.1.9

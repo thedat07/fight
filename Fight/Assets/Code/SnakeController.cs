@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class SnakeController : MonoBehaviour
+public class SnakeController : SnakeBase
 {
     public bool IsDead;
     public Animator animator;
@@ -15,9 +15,6 @@ public class SnakeController : MonoBehaviour
     public int Gap = 10;
 
 
-    // Lists
-    public List<GameObject> BodyParts = new List<GameObject>();
-    public List<Vector3> PositionsHistory = new List<Vector3>();
 
     //UI
     public UIEnd UIDead;
@@ -25,7 +22,6 @@ public class SnakeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UIGamePlay.UpdateStart(0, 10);
         // GrowSnake();
     }
 
@@ -72,7 +68,7 @@ public class SnakeController : MonoBehaviour
         // Instantiate body instance and
         // add it to the list
         transform.DORewind();
-        transform.DOPunchScale(Vector3.one * 0.5f, 0.5f);
+        transform.DOPunchScale(Vector3.one * 0.1f, 0.5f);
         GameObject body =_object;
         BodyParts.Add(body);
         int index = 0;
@@ -87,8 +83,6 @@ public class SnakeController : MonoBehaviour
             // Rotate body towards the point along the snakes path
             body.transform.LookAt(point);
             index++;
-            b.transform.DORewind();
-            b.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f);
         }
     }
 
@@ -97,7 +91,6 @@ public class SnakeController : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
                 if (other.gameObject.CompareTag("Item"))
         {
-            UIGamePlay.UpdateStart(BodyParts.Count+1, 10);
             other.gameObject.GetComponent<ItemGame>().Pick();
             GrowSnake(other.transform.position,other.gameObject);
         }

@@ -4,43 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System.Linq;
 public class UIGamePlay : MonoBehaviour
 {
-    public GameObject gamePlay;
-    public int gold;
-    public TextMeshProUGUI txtGold;
-    public RectTransform m_ImageGold;
-    public List<Sprite> lstStart;
-    public Image img_Strat;
-    public TextMeshProUGUI m_TextInfo;
-    void OnEnable()
+    public List<UIGamePlayInfo> lisInfo;
+    public TextMeshProUGUI textDemo;
+    public Transform content;
+    private void Update()
     {
-        gamePlay.gameObject.SetActive(true);
-    }
-    void OnDisable()
-    {
-        gamePlay.gameObject.SetActive(false);
-    }
-    public void UpdateGold(int number)
-    {
-        gold += number;
-        txtGold.text = gold.ToString();
-        m_ImageGold.DORewind();
-        m_ImageGold.DOPunchScale(Vector3.one * 0.2f, 0.25f);
-    }
-    public void UpdateStart(int _point, int _pointMax)
-    {
-        m_TextInfo.text = string.Format("{0}/{1}", _point, _pointMax);
-        if(_point< _pointMax / 3)
+       var listsort = lisInfo.OrderByDescending(x => x.SnakeController.BodyParts.Count).ToList();
+        for(int i =0;i< listsort.Count; i++)
         {
-            img_Strat.sprite = lstStart[0];
-        }else if (_point < _pointMax / 2)
-        {
-            img_Strat.sprite = lstStart[1];
-        }
-        else
-        {
-            img_Strat.sprite = lstStart[2];
+            listsort[i].text.GetComponent<RectTransform>().anchoredPosition = new Vector3(100,(-16.6f -(-33.2f*(i+1)))*-1,0);
+            listsort[i].text.text = string.Format("{0} : {1}", listsort[i].name, listsort[i].SnakeController.BodyParts.Count);
         }
     }
+    public void CreateText(string _name, SnakeBase _base)
+    {
+        var text = Instantiate(textDemo, content);
+         UIGamePlayInfo info = new UIGamePlayInfo();
+        info.name = _name;
+        info.SnakeController = _base;
+        info.text = text;
+        lisInfo.Add(info);
+    }
+}
+[System.Serializable]
+public class UIGamePlayInfo
+{
+    public string name;
+    public SnakeBase SnakeController;
+    public TextMeshProUGUI text;
 }

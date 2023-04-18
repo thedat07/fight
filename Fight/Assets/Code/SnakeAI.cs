@@ -5,18 +5,12 @@ using UnityEngine.AI;
 using DG.Tweening;
 using Lean.Pool;
 
-public class SnakeAI : MonoBehaviour, IPoolable
+public class SnakeAI : SnakeBase, IPoolable
 {
     // Start is called before the first frame update
     public Animator animator;
     public float BodySpeed = 5;
     public int Gap = 10;
-
-
-
-    // Lists
-    public List<GameObject> BodyParts = new List<GameObject>();
-    public List<Vector3> PositionsHistory = new List<Vector3>();
 
     private NavMeshAgent m_Enemy;
     public Transform player;
@@ -70,7 +64,7 @@ public class SnakeAI : MonoBehaviour, IPoolable
         // Instantiate body instance and
         // add it to the list
         transform.DORewind();
-        transform.DOPunchScale(Vector3.one * 0.5f, 0.5f);
+        transform.DOPunchScale(Vector3.one * 0.1f, 0.5f);
         GameObject body = _object;
         BodyParts.Add(body);
         int index = 0;
@@ -85,8 +79,6 @@ public class SnakeAI : MonoBehaviour, IPoolable
             // Rotate body towards the point along the snakes path
             body.transform.LookAt(point);
             index++;
-            b.transform.DORewind();
-            b.transform.DOPunchScale(Vector3.one * 0.2f, 0.5f);
         }
     }
 

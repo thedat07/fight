@@ -10,9 +10,12 @@ public class SnakeCustom : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int count = 0;
         foreach(var i in so)
         {
+            i.id = GetData(count);
             UpdateCustom(i);
+            count++;
         }
     }
 
@@ -30,6 +33,47 @@ public class SnakeCustom : MonoBehaviour
         m_Animator.SetTrigger("Pick");
         so[_type].id = _id;
         UpdateCustom(so[_type]);
+        SaveData(_id, _type);
+    }
+    public void SaveData(int _id, int _type)
+    {
+        switch (_type)
+        {
+            case 1:
+                PlayerPrefs.SetInt(Static.armLeftData, _id);
+                break;
+            case 2:
+                PlayerPrefs.SetInt(Static.armRightData, _id);
+                break;
+            case 3:
+                PlayerPrefs.SetInt(Static.headData, _id);
+                break;
+            case 4:
+                PlayerPrefs.SetInt(Static.bodyData, _id);
+                break;
+        }
+        PlayerPrefs.Save();
+    }
+
+    public int GetData( int _type)
+    {
+        int number = 0;
+        switch (_type)
+        {
+            case 1:
+                number= PlayerPrefs.GetInt(Static.armLeftData, _type);
+                break;
+            case 2:
+                number= PlayerPrefs.GetInt(Static.armRightData, _type);
+                break;
+            case 3:
+                number= PlayerPrefs.GetInt(Static.headData, _type);
+                break;
+            case 4:
+                number= PlayerPrefs.GetInt(Static.bodyData, _type);
+                break;
+        }
+        return number;
     }
 }
 [System.Serializable]

@@ -88,8 +88,18 @@ public class SnakeAI : SnakeBase, IPoolable
     {
         if (other.gameObject.CompareTag("Item"))
         {
-            other.gameObject.GetComponent<ItemGame>().Pick(false);
-            GrowSnake(other.transform.position, other.gameObject);
+            if (other.gameObject.GetComponent<ItemGame>().snake == null)
+            {
+                other.gameObject.GetComponent<ItemGame>().Pick( this,false);
+                GrowSnake(other.transform.position, other.gameObject);
+            }
+            else
+            {
+                if (other.gameObject.GetComponent<ItemGame>().snake != this)
+                {
+                    Lean.Pool.LeanPool.Despawn(gameObject);
+                }
+            }
         }
         if (other.gameObject.CompareTag("Wall"))
         {

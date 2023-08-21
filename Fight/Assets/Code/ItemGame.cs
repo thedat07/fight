@@ -9,12 +9,11 @@ public class ItemGame : MonoBehaviour
     Collider m_Collider;
     private float m_CountDownTime;
     public int gold;
-    UIGamePlay m_UIGamePlay;
     public float m_TimeHide;
+    public SnakeBase snake;
     private void Awake()
     {
         m_Collider = GetComponent<Collider>();
-        m_UIGamePlay = FindObjectOfType<UIGamePlay>();
     }
 
     void OnEnable()
@@ -27,15 +26,13 @@ public class ItemGame : MonoBehaviour
         enabled = true;
     }
 
-    public void Pick(bool _check=true)
+    public void Pick(SnakeBase snake,bool _check=true)
     {
-
-        m_Collider.enabled = false;
-        enabled = false;
+        this.snake = snake;
     }
+
     public void Clear()
     {
-        m_Collider.enabled = true;
-        enabled = true;
+        snake = null;
     }
 }

@@ -1521,7 +1521,7 @@ MonoBehaviour:
   MoveSpeed: 10
   SteerSpeed: 180
   BodySpeed: 5
-  Gap: 50
+  Gap: 15
   UIDead: {fileID: 547497299}
   UIGamePlay: {fileID: 2126080508}
 --- !u!4 &1562947510
@@ -2178,6 +2178,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1562947510}
+    - target: {fileID: 2903112608727728527, guid: 89fef2531af073a46805f1ed6da33330, type: 3}
+      propertyPath: UIGamePlay
+      value: 
+      objectReference: {fileID: 2126080508}
     - target: {fileID: 4932229510158254862, guid: 89fef2531af073a46805f1ed6da33330, type: 3}
       propertyPath: snake
       value: 

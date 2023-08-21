@@ -12,6 +12,7 @@ public class SpamEnemies : MonoBehaviour
     public RevivalPoint RevivalPoint;
     public int minDir;
     public int maxDir;
+    public UIGamePlay UIGamePlay;
     void Start()
     {
         for(int i = 0; i < numberEnmies; i++)
@@ -23,6 +24,7 @@ public class SpamEnemies : MonoBehaviour
     public void SpamEnemy(Vector3 _point)
     {
         var enmey = Lean.Pool.LeanPool.Spawn(lstEnmies[Random.Range(0, lstEnmies.Count)], _point, Quaternion.identity);
+        UIGamePlay.CreateText(string.Format("Player {0}", Random.Range(0, 100)), enmey.GetComponent<SnakeBase>(), false);
         enmey.GetComponent<SnakeAI>().player = player;
         enmey.GetComponent<SnakeAI>().SpamEnemies = this;
         lstEnmiesNow.Add(enmey);

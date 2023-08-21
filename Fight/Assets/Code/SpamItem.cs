@@ -12,6 +12,8 @@ public class SpamItem : MonoBehaviour
     public ItemGame itemGold;
     public int maxGold;
     public int maxDir;
+
+    public UIGamePlay UIGamePlay;
     // Start is called before the first frame update
     void Start()
     {

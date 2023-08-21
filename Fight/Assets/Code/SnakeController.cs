@@ -22,7 +22,7 @@ public class SnakeController : SnakeBase
     // Start is called before the first frame update
     void Start()
     {
-        // GrowSnake();
+        FindObjectOfType<UIGamePlay>().CreateText(string.Format("Player {0}", Random.Range(0, 100)), this, player);
     }
 
     // Update is called once per frame
@@ -89,12 +89,31 @@ public class SnakeController : SnakeBase
 
 
     private void OnCollisionEnter(Collision other) {
-                if (other.gameObject.CompareTag("Item"))
+        if (other.gameObject.CompareTag("Item"))
         {
-            other.gameObject.GetComponent<ItemGame>().Pick();
-            GrowSnake(other.transform.position,other.gameObject);
+            if (other.gameObject.GetComponent<ItemGame>().snake == null)
+            {
+                other.gameObject.GetComponent<ItemGame>().Pick(this, false);
+                GrowSnake(other.transform.position, other.gameObject);
+            }
+            else
+            {
+                if (other.gameObject.GetComponent<ItemGame>().snake != this)
+                {
+                    UIDead.gameObject.SetActive(true);
+                    UIDead.snakeController = this;
+                    UIDead.Star(0);
+                    foreach (var i in BodyParts)
+                    {
+                        i.GetComponent<ItemGame>().Clear();
+                    }
+                    BodyParts.Clear();
+                    gameObject.SetActive(false);
+                }
+            }
+
         }
-        if (other.gameObject.CompareTag("Wall"))
+      else  if (other.gameObject.CompareTag("Wall"))
         {
             UIDead.gameObject.SetActive(true);
             UIDead.snakeController = this;

@@ -296,11 +296,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b383e35202206468c2d202fc4d334f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 4316545548102073213}
-  BodySpeed: 5
-  Gap: 50
   BodyParts: []
   PositionsHistory: []
+  animator: {fileID: 4316545548102073213}
+  BodySpeed: 5
+  Gap: 15
   player: {fileID: 0}
   SpamEnemies: {fileID: 0}
 --- !u!195 &4316545548413295869

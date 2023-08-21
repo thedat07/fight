@@ -11,11 +11,11 @@ public class ObjectHide : MonoBehaviour
     {
         foreach(var i in lstObjectFollow)
         {
-            i.SetActive(false);
+            if(i!=null) i.SetActive(false);
         }
         foreach (var i in lstObjectDontFollow)
         {
-            i.SetActive(true);
+            if (i != null) i.SetActive(true);
         }
     }
 
@@ -23,11 +23,11 @@ public class ObjectHide : MonoBehaviour
     {
         foreach (var i in lstObjectFollow)
         {
-            i.SetActive(true);
+            if (i != null) i.SetActive(true);
         }
         foreach (var i in lstObjectDontFollow)
         {
-            i.SetActive(false);
+            if (i != null) i.SetActive(false);
         }
     }
 }

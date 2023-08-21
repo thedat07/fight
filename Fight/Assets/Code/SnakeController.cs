@@ -14,7 +14,7 @@ public class SnakeController : SnakeBase
     public float BodySpeed = 5;
     public int Gap = 10;
 
-
+    protected override bool player => true;
 
     //UI
     public UIEnd UIDead;

@@ -19,13 +19,14 @@ public class UIGamePlay : MonoBehaviour
             listsort[i].text.text = string.Format("{0} : {1}", listsort[i].name, listsort[i].SnakeController.BodyParts.Count);
         }
     }
-    public void CreateText(string _name, SnakeBase _base)
+    public void CreateText(string _name, SnakeBase _base, bool player)
     {
         var text = Instantiate(textDemo, content);
          UIGamePlayInfo info = new UIGamePlayInfo();
         info.name = _name;
         info.SnakeController = _base;
         info.text = text;
+        info.text.color = player == true ? Color.green : Color.black; 
         lisInfo.Add(info);
     }
 }

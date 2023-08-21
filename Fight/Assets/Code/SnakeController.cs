@@ -68,7 +68,7 @@ public class SnakeController : SnakeBase
         // Instantiate body instance and
         // add it to the list
         transform.DORewind();
-        transform.DOPunchScale(Vector3.one * 0.1f, 0.5f);
+        transform.DOPunchScale(Vector3.one * 0.1f, 0.5f).SetLink(gameObject, LinkBehaviour.PauseOnDisable);
         GameObject body =_object;
         BodyParts.Add(body);
         int index = 0;
@@ -91,40 +91,39 @@ public class SnakeController : SnakeBase
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Item"))
         {
-            if (other.gameObject.GetComponent<ItemGame>().snake == null)
+            var data=  other.gameObject.GetComponent<ItemGame>();
+
+            if (data.snake == null)
             {
-                other.gameObject.GetComponent<ItemGame>().Pick(this, false);
+                data.Pick(this, false);
                 GrowSnake(other.transform.position, other.gameObject);
             }
             else
             {
-                if (other.gameObject.GetComponent<ItemGame>().snake != this)
+                if (data.snake != this)
                 {
-                    UIDead.gameObject.SetActive(true);
-                    UIDead.snakeController = this;
-                    UIDead.Star(0);
-                    foreach (var i in BodyParts)
-                    {
-                        i.GetComponent<ItemGame>().Clear();
-                    }
-                    BodyParts.Clear();
-                    gameObject.SetActive(false);
+                    Clear();
                 }
             }
 
         }
-      else  if (other.gameObject.CompareTag("Wall"))
+        else if (other.gameObject.CompareTag("Wall"))
         {
-            UIDead.gameObject.SetActive(true);
-            UIDead.snakeController = this;
-            UIDead.Star(0);
-            foreach (var i in BodyParts)
-            {
-                i.GetComponent<ItemGame>().Clear();
-            }
-            BodyParts.Clear();
-            gameObject.SetActive(false);
+                Clear();
         }
+    }
+
+    private void Clear()
+    {
+        UIDead.gameObject.SetActive(true);
+        UIDead.snakeController = this;
+        UIDead.Star(0);
+        foreach (var i in BodyParts)
+        {
+            i.GetComponent<ItemGame>().Clear();
+        }
+        BodyParts.Clear();
+        gameObject.SetActive(false);
     }
 
 }

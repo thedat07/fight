@@ -15,6 +15,6 @@ public class ButtonEffect : MonoBehaviour
 
     private void Scale()
     {
-        m_RectTransform.DOScale(Vector3.one, 0.5f).SetEase(ease).SetLoops(-1,LoopType.Yoyo).From(Vector3.one*0.8f);
+        m_RectTransform.DOScale(Vector3.one, 0.5f).SetEase(ease).SetLoops(-1,LoopType.Yoyo).From(Vector3.one*0.8f).SetLink(gameObject,LinkBehaviour.PauseOnDisable);
     }
 }

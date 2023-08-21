@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using DG.Tweening;
 using Lean.Pool;
 
-public class SnakeAI : SnakeBase, IPoolable
+public class SnakeAI : SnakeBase
 {
     // Start is called before the first frame update
     public Animator animator;
@@ -20,13 +20,17 @@ public class SnakeAI : SnakeBase, IPoolable
     {
         transform.parent = null;
         m_Enemy = GetComponent<NavMeshAgent>();
+        m_Enemy.avoidancePriority = 10;
     }
 
     // Update is called once per frame
     void Update()
     {
         Collider[] hitColliders = new Collider[1];
-        int numColliders = Physics.OverlapSphereNonAlloc(transform.position, 15, hitColliders,LayerMask.GetMask("Item"));
+
+        Vector3 pos = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+        int numColliders = Physics.OverlapSphereNonAlloc(transform.position + pos, 15, hitColliders, LayerMask.GetMask("Item"));
+        
         if (numColliders > 0)
         {
             m_Target = hitColliders[0].transform.position;
@@ -34,13 +38,9 @@ public class SnakeAI : SnakeBase, IPoolable
         }
         else
         {
-            if(Vector3.Distance(m_Target,transform.position)<5)
-            {
-                m_Target = transform.position + Static.RandomPointInAnnulus(5, 10);
-            }
+            m_Enemy.SetDestination(player.transform.position);
         }
-        m_Enemy.SetDestination(m_Target);
-        // Store position history
+
         PositionsHistory.Insert(0, transform.position);
 
         // Move body parts
@@ -88,32 +88,29 @@ public class SnakeAI : SnakeBase, IPoolable
     {
         if (other.gameObject.CompareTag("Item"))
         {
-            if (other.gameObject.GetComponent<ItemGame>().snake == null)
+            var data = other.gameObject.GetComponent<ItemGame>();
+
+            if (data.snake == null)
             {
-                other.gameObject.GetComponent<ItemGame>().Pick( this,false);
+                data.Pick(this, false);
                 GrowSnake(other.transform.position, other.gameObject);
             }
             else
             {
-                if (other.gameObject.GetComponent<ItemGame>().snake != this)
+                if (data.snake != this)
                 {
-                    Lean.Pool.LeanPool.Despawn(gameObject);
+                    Clear();
                 }
             }
+
         }
-        if (other.gameObject.CompareTag("Wall"))
+        else if (other.gameObject.CompareTag("Wall"))
         {
-            Lean.Pool.LeanPool.Despawn(gameObject);
+            Clear();
         }
     }
 
-   public  void OnSpawn()
-    {
-
-    }
-
-    /// <summary>Called when this poolable object is despawned.</summary>
-    public void OnDespawn()
+    private void Clear()
     {
         SpamEnemies.SpamRevivalPoint();
         foreach (var i in BodyParts)
@@ -121,5 +118,6 @@ public class SnakeAI : SnakeBase, IPoolable
             i.GetComponent<ItemGame>().Clear();
         }
         BodyParts.Clear();
+        Destroy(gameObject);
     }
 }

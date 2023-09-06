@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SpamEnemies : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class SpamEnemies : MonoBehaviour
     public int minDir;
     public int maxDir;
     public UIGamePlay UIGamePlay;
+
+    [Header("Setting Enemy AI")]
+    public Vector2 speed = new Vector2(10,10);
+
     void Start()
     {
         for(int i = 0; i < numberEnmies; i++)
@@ -28,6 +33,7 @@ public class SpamEnemies : MonoBehaviour
         enmey.GetComponent<SnakeAI>().player = player;
         enmey.GetComponent<SnakeAI>().SpamEnemies = this;
         lstEnmiesNow.Add(enmey);
+         enmey.GetComponent<NavMeshAgent>().speed = Random.Range(speed.x,speed.y);
     }
     public void SpamRevivalPoint()
     {

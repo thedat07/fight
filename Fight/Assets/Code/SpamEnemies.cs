@@ -16,6 +16,8 @@ public class SpamEnemies : MonoBehaviour
     public UIGamePlay UIGamePlay;
 
     [Header("Setting Enemy AI")]
+      public ObstacleAvoidanceType AvoidanceType;
+          public float AgentRadius = 0.33f;
     public Vector2 speed = new Vector2(10,10);
 
     void Start()
@@ -33,8 +35,17 @@ public class SpamEnemies : MonoBehaviour
         enmey.GetComponent<SnakeAI>().player = player;
         enmey.GetComponent<SnakeAI>().SpamEnemies = this;
         lstEnmiesNow.Add(enmey);
-         enmey.GetComponent<NavMeshAgent>().speed = Random.Range(speed.x,speed.y);
+
+     SetupAgent( enmey.GetComponent<NavMeshAgent>());
     }
+
+    private void SetupAgent(NavMeshAgent Agent){
+                Agent.radius = AgentRadius;
+          Agent.obstacleAvoidanceType = AvoidanceType;
+        Agent.speed = Random.Range(speed.x,speed.y);
+        Agent.avoidancePriority = Random.Range(0, 100);
+    }
+
     public void SpamRevivalPoint()
     {
         var enmey = Lean.Pool.LeanPool.Spawn(RevivalPoint, Static.RandomPointInAnnulus(minDir, maxDir), Quaternion.identity);

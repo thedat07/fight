@@ -2231,8 +2231,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2126080508}
     - target: {fileID: 2903112608727728527, guid: 89fef2531af073a46805f1ed6da33330, type: 3}
+      propertyPath: AgentRadius
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903112608727728527, guid: 89fef2531af073a46805f1ed6da33330, type: 3}
       propertyPath: numberEnmies
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903112608727728527, guid: 89fef2531af073a46805f1ed6da33330, type: 3}
+      propertyPath: AvoidanceType
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4932229510158254862, guid: 89fef2531af073a46805f1ed6da33330, type: 3}
       propertyPath: snake

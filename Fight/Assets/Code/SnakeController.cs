@@ -22,7 +22,7 @@ public class SnakeController : SnakeBase
     // Start is called before the first frame update
     void Start()
     {
-        FindObjectOfType<UIGamePlay>().CreateText(string.Format("Player {0}", Random.Range(0, 100)), this, player);
+        FindObjectOfType<UIGamePlay>().CreateText(string.Format("{0}", PlayerPrefs.GetString("Name")), this, player);
     }
 
     // Update is called once per frame
